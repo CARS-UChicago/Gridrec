@@ -22,9 +22,9 @@ static sg_struct SGP;
 EXPORT void recon_init_IDL (int argc, char *argv[])
 {
     long imgsiz;
-    SGP.n_ang    = *(int *) argv[0];
-    SGP.n_det    = *(int *) argv[1];
-    SGP.geom     = *(int *) argv[2];
+    SGP.n_ang    = *(int *)argv[0];
+    SGP.n_det    = *(int *)argv[1];
+    SGP.geom     = *(int *)argv[2];
     SGP.angles   =  (float *)argv[3];
     SGP.center   = *(float *)argv[4];
     get_pswf(*(float *)argv[5], &GP.pswf);
@@ -33,10 +33,10 @@ EXPORT void recon_init_IDL (int argc, char *argv[])
     GP.MaxPixSiz = *(float *)argv[8];
     GP.X0        = *(float *)argv[9];
     GP.Y0        = *(float *)argv[10];
-    GP.ltbl      = *(int *) argv[11];
+    GP.ltbl      = *(int *)argv[11];
     GP.filter    =  get_filter((char *)argv[12]);
-    imgsiz       = *(int *) argv[13];
     recon_init(&GP, &SGP, &imgsiz);
+    *(int *)argv[13] = (int)imgsiz;
     return;
 }
 
