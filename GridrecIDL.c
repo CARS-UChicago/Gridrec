@@ -5,6 +5,7 @@
    May, 2000
 
    Aug. 22, 2001 MLR  Modifications to allow compiling on non-Windows systems
+   August 13, 2008 MLR Fixed intermittent bug when calling 64-bit Gridrec from IDL
 */
 
 #ifdef WINDOWS
