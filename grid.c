@@ -117,14 +117,11 @@ void recon_init(grid_struct *GP,sg_struct *SGP, long *imgsiz)
   cproj=malloc_vector_c(pdim); 
   filphase=malloc_vector_c(pdim/2);	
   H=malloc_matrix_c(M,M);
-printf("Calling malloc_vector_f for length ltbl+1 = %ld\n", ltbl+1);
   wtbl=malloc_vector_f(ltbl+1);	
 #ifdef INTERP
   dwtbl=malloc_vector_f(ltbl+1);	
 #endif
-printf("Calling malloc_vector_f for length M0 = %ld\n", M0);
   winv=malloc_vector_f(M0);
-printf("Calling malloc_vector_f for length L+1 = %d\n", (int)(L+1));
   work=malloc_vector_f((int)L+1);
 
   /*** Set up table of sines and cosines ***/
@@ -517,7 +514,6 @@ static void trig_su(sg_struct *SG, float **SP, float **CP)
   int j, geom=SG->geom, n_ang=SG->n_ang;
   float *S,*C;
 
-printf("Calling malloc_vector_f for length n_ang = %d\n", n_ang);
   *SP=S=malloc_vector_f(n_ang);
   *CP=C=malloc_vector_f(n_ang);
   switch (geom)
