@@ -1,0 +1,16 @@
+# Makefile for GridrecIDL for Mac Darwin
+
+SHELL = /bin/sh
+CFLAGS = -O -DIDL
+INCLUDES=-I../
+MAKE = make
+OBJ = grid.o GridrecIDL.o grid_math.o pswf.o filters.o fft.o
+SRC = grid.c GridrecIDL.c grid_math.c pswf.c filters.c fft.c
+
+GridrecIDL.so: $(OBJ)
+	@echo "Creating GridrecIDL.so"
+	cc -bundle -flat_namespace -undefined suppress -o $@ $(OBJ)
+
+clean:
+	rm *.o GridrecIDL.so 
+
