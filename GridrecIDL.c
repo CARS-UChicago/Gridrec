@@ -21,7 +21,7 @@ static sg_struct SGP;
 
 EXPORT void recon_init_IDL (int argc, char *argv[])
 {
-    long *imgsiz;
+    long imgsiz;
     SGP.n_ang    = *(int *) argv[0];
     SGP.n_det    = *(int *) argv[1];
     SGP.geom     = *(int *) argv[2];
@@ -35,8 +35,8 @@ EXPORT void recon_init_IDL (int argc, char *argv[])
     GP.Y0        = *(float *)argv[10];
     GP.ltbl      = *(int *) argv[11];
     GP.filter    =  get_filter((char *)argv[12]);
-    imgsiz       =  (int *) argv[13];
-    recon_init(&GP, &SGP, imgsiz);
+    imgsiz       = *(int *) argv[13];
+    recon_init(&GP, &SGP, &imgsiz);
     return;
 }
 
