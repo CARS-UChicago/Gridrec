@@ -5,11 +5,10 @@
    May, 2000
 
    Aug. 22, 2001 MLR  Modifications to allow compiling on non-Windows systems
-   August 13, 2008 MLR Fixed intermittent bug when calling 64-bit Gridrec from IDL
 */
 
-#ifdef WINDOWS
-#define EXPORT __declspec(dllexport)a
+#ifdef _WINDOWS
+#define EXPORT __declspec(dllexport)
 #else
 #define EXPORT
 #endif
@@ -21,10 +20,10 @@ static sg_struct SGP;
 
 EXPORT void recon_init_IDL (int argc, char *argv[])
 {
-    long imgsiz;
-    SGP.n_ang    = *(int *)argv[0];
-    SGP.n_det    = *(int *)argv[1];
-    SGP.geom     = *(int *)argv[2];
+    long *imgsiz;
+    SGP.n_ang    = *(long *) argv[0];
+    SGP.n_det    = *(long *) argv[1];
+    SGP.geom     = *(long *) argv[2];
     SGP.angles   =  (float *)argv[3];
     SGP.center   = *(float *)argv[4];
     get_pswf(*(float *)argv[5], &GP.pswf);
@@ -33,19 +32,19 @@ EXPORT void recon_init_IDL (int argc, char *argv[])
     GP.MaxPixSiz = *(float *)argv[8];
     GP.X0        = *(float *)argv[9];
     GP.Y0        = *(float *)argv[10];
-    GP.ltbl      = *(int *)argv[11];
+    GP.ltbl      = *(long *) argv[11];
     GP.filter    =  get_filter((char *)argv[12]);
-    recon_init(&GP, &SGP, &imgsiz);
-    *(int *)argv[13] = (int)imgsiz;
+    imgsiz       =  (long *) argv[13];
+    recon_init(&GP, &SGP, imgsiz);
     return;
 }
 
 EXPORT void do_recon_IDL (int argc, char *argv[])
 {
 
-    int n_ang  = *(int *)argv[0];
-    int n_det  = *(int *)argv[1];
-    int imgsiz = *(int *)argv[2];
+    int n_ang  = *(long *)argv[0];
+    int n_det  = *(long *)argv[1];
+    int imgsiz = *(long *)argv[2];
     float **G1, **G2, **S1, **S2;
     int i;
 
