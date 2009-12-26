@@ -18,7 +18,7 @@ GridrecIDL.so: $(OBJ)
 # For Numerical Recipes
 #	$(LD) -G -o$@ $(OBJ) -lm;
 # For FFTW
-	$(LD) -G -o$@ $(OBJ) -lfftw3f -lm;
+	$(LD) -G -o$@ $(OBJ) -lfftw3f -lfftw3f_threads -lm;
 
 clean:
 	rm *.o GridrecIDL.so 
