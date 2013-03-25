@@ -57,12 +57,29 @@ void recon_init(grid_struct *GP,sg_struct *SGP, long *imgsiz)
   float (*filter)(float);
   long itmp;
 	
+  /* verbose = 1; */
+  
   pswf_struct *pswf;
 
   n_ang=SGP->n_ang;
   n_det=SGP->n_det;
   center=SGP->center;	
-	
+  if (verbose) printf("recon_init: \n"
+       "SGP->n_ang=%d\n"
+       "SGP->n_det=%d\n"
+       "SGP->geom=%d\n"
+       "SGP->angles[100]=%f\n"
+       "SGP->center=%f\n"
+       "GP->sampl=%f\n"
+       "GP->MaxPixSiz=%f\n"
+       "GP->R=%f\n"
+       "GP->X0=%f\n"
+       "GP->Y0=%f\n"
+       "GP->fname=%s\n"
+       "GP->ltbl=%ld\n",
+       SGP->n_ang, SGP->n_det, SGP->geom, SGP->angles[100], SGP->center,
+       GP->sampl, GP->MaxPixSiz, GP->R, GP->X0, GP->Y0, GP->fname, GP->ltbl);
+       
   sampl=GP->sampl;
   MaxPixSiz=GP->MaxPixSiz;
   R=GP->R;
