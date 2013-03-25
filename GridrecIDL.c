@@ -8,7 +8,7 @@
    August 13, 2008 MLR Fixed intermittent bug when calling 64-bit Gridrec from IDL
 */
 
-#ifdef WINDOWS
+#ifdef _WIN32
 #define EXPORT __declspec(dllexport)
 #else
 #define EXPORT
