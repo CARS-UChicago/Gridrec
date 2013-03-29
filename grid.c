@@ -461,6 +461,7 @@ static void filphase_su(long pd, float center,
   float norm=pi/pd/n_ang;	/* Normalization factor for
 				   back transform  7/7/98  */
 
+  if (verbose) printf("filphase_su, pd=%ld, center=%f, pf=%p\n", pd, center, pf);
   for(j=0;j<pd2;j++)
     {
       x=j*rtmp1;
