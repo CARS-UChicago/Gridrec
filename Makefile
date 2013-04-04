@@ -18,7 +18,6 @@ GridrecIDL_LIBS_Linux += fftw3f
 # To use the system version of fftw3f use this line
 #tomoRecon_SYS_LIBS_Linux += fftw3f
 GridrecIDL_SYS_LIBS_Darwin += fftw3f
-GridrecIDL_LIBS += Com
 
 #=============================
 
