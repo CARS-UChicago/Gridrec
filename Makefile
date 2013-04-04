@@ -1,25 +1,30 @@
-# Makefile for GridrecIDL for Linux
+TOP=../..
+include $(TOP)/configure/CONFIG
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
+#=============================
 
-SHELL = /bin/sh
-CFLAGS = -O -DIDL -fPIC -Wall
-INCLUDES=-I../
-MAKE = make
+SHARED_LIBRARIES = YES
+STATIC_BUILD = YES
+LIBRARY_HOST += GridrecIDL
+USR_CFLAGS += -DIDL
+GridrecIDL_LDFLAGS_Linux += $(STATIC_LDFLAGS)
 
-# For Numerical Recipes
-#OBJ = grid.o GridrecIDL.o grid_math.o pswf.o filters.o fft.o
-#SRC = grid.c GridrecIDL.c grid_math.c pswf.c filters.c fft.c
+GridrecIDL_SRCS += grid.c GridrecIDL.c grid_math.c pswf.c filters.c fft_fftw.c
 
-# For FFTW
-OBJ = grid.o GridrecIDL.o grid_math.o pswf.o filters.o fft_fftw.o
-SRC = grid.c GridrecIDL.c grid_math.c pswf.c filters.c fft_fftw.c
+GridrecIDL_LIBS_WIN32 += libfftw3f-3
+# To use the version of fftw3f included with tomoRecon use this line
+GridrecIDL_LIBS_Linux += fftw3f
+# To use the system version of fftw3f use this line
+#tomoRecon_SYS_LIBS_Linux += fftw3f
+GridrecIDL_SYS_LIBS_Darwin += fftw3f
+GridrecIDL_LIBS += Com
 
-GridrecIDL.so: $(OBJ)
-	@echo "Creating GridrecIDL.so"
-# For Numerical Recipes
-#	$(LD) -G -o$@ $(OBJ) -lm;
-# For FFTW
-	$(LD) -G -o$@ $(OBJ) -lfftw3f -lm;
+#=============================
 
-clean:
-	rm *.o GridrecIDL.so 
 
+#===========================
+
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
