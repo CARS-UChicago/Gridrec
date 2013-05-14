@@ -1,25 +1,15 @@
-#include <stdlib.h>
+#include <string.h>
 #include <fftw3.h>
 
-#ifdef LINUX
-#define CFFT1D cfft1d_
-#define CFFT2D cfft2d_
-#endif
+#include <epicsExport.h>
 
-#ifdef WINDOWS
-#define EXPORT __declspec(dllexport)a
-#else
-#define EXPORT
-#endif
 
 /** Defined in fft.c (FFT routines from Numerical Recipes) **/
 void four1(float data[], unsigned long nn, int isign);
 void fourn(float data[], unsigned long nn[], int ndim, int isign);
 
-/* Storage for CFFT1D */
-static float *wsave;
 
-EXPORT void fft_test1n (int argc, char *argv[])
+epicsShareFunc void epicsShareAPI fft_test1n (int argc, char *argv[])
 {
 
         float *data = (float *)argv[0];
@@ -30,23 +20,7 @@ EXPORT void fft_test1n (int argc, char *argv[])
         four1(data-1, nn, isign);
 }
 
-EXPORT void fft_test1i (int argc, char *argv[])
-{
-
-        float *data = (float *)argv[0];
-        unsigned long nn  = *(long *)argv[1];
-        int isign  = *(int *)argv[2];
-
-        /* Call the Intel Math Kernel Library routine */
-        if (isign == 0) {
-                /* The required storage is (3*N)/2 complex elements = 3*N floats */
-                free(wsave);
-                wsave = malloc(3 * nn * sizeof(float));
-        }
-/*        CFFT1D(data, &nn, &isign, wsave); */
-}
-
-EXPORT void fft_test1f (int argc, char *argv[])
+epicsShareFunc void epicsShareAPI fft_test1f (int argc, char *argv[])
 {
 
         float *data = (float *)argv[0];
@@ -74,7 +48,7 @@ EXPORT void fft_test1f (int argc, char *argv[])
 }
 
 
-EXPORT void fft_test2n (int argc, char *argv[])
+epicsShareFunc void epicsShareAPI fft_test2n (int argc, char *argv[])
 {
 
         float *data = (float *)argv[0];
@@ -90,19 +64,7 @@ EXPORT void fft_test2n (int argc, char *argv[])
         fourn(data-1, nn-1, 2, isign);
 }
 
-EXPORT void fft_test2i (int argc, char *argv[])
-{
-
-        float *data = (float *)argv[0];
-        int nx  = *(int *)argv[1];
-        int ny  = *(int *)argv[2];
-        int isign  = *(int *)argv[3];
-
-        /* Call Intel Math Kernel Library routine */
-/*        CFFT2D(data, &nx, &ny, &isign); */
-}
-
-EXPORT void fft_test2f (int argc, char *argv[])
+epicsShareFunc void epicsShareAPI fft_test2f (int argc, char *argv[])
 {
 
         float *data = (float *)argv[0];
