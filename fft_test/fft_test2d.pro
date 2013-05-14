@@ -1,4 +1,8 @@
 pro fft_test2d, nx=nx, ny=ny, isign=isign, nloop=nloop, f0, f1, f2, f3
+   common fft_test_common, library
+
+   if (!version.os eq 'linux') then library='O.linux-x86_64/libfftTestIDL.so' else library='O.windows-x64/fftTestIDL.dll'
+
    if (n_elements(nx) eq 0)    then nx = 1024
    if (n_elements(ny) eq 0)    then ny = 1024
    if (n_elements(nloop) eq 0) then nloop = 1
@@ -21,16 +25,6 @@ pro fft_test2d, nx=nx, ny=ny, isign=isign, nloop=nloop, f0, f1, f2, f3
       fft_test2n, f1, isign
    endfor
    print, 'Time with Numerical Recipes FFT', systime(1)-t0
-
-   ;t0 = systime(1)
-   ;for i=0, nloop-1 do begin
-   ;   f2 = data
-   ;   fft_test2i, f2, isign
-   ;endfor
-   ;print, 'Time with Intel Math Kernel Library FFT', systime(1)-t0
-   ;; Renormalize if isign is 1
-   ;if (isign eq 1) then f2 = f2 * nx * ny
-   ;end
 
    t0 = systime(1)
    for i=0, nloop-1 do begin 
