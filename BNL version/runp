@@ -1,0 +1,49 @@
+#!/usr/bin/tcsh
+# 	$Id$	
+# Script for running reconstrtuction on a multiprocessor machine
+#set debug=" echo "
+setenv BINDIR /usr/people/gc/bin
+if ( $# < 1 ) then
+echo Must specify one argument, the parallelism desired
+exit
+endif
+set path=(${BINDIR} $path)
+which makePfile.pl
+makePfile.pl
+cat Parameters
+echo Starting phase1
+date
+if (${?debug}) then
+   time echo phase1
+else
+   time phase1 
+echo End phase 1
+echo Start phase 2
+date
+/usr/bin/ls -1 slice???|pargs.pl -p $1 time phase2 {} \>\>p2.log \& > xxx
+if (${?debug}) then
+   cat xxx
+else
+   source xxx
+endif
+wait
+echo End phase2
+
+echo Starting phase 2.5
+date
+if (${?debug}) then
+   set center=1
+else
+   set center=`cat slice*.center | awk '{sum += $2;cnt+=1;}END{print sum/cnt;}'`
+endif
+
+echo End phase 2.5, starting reconstruction
+date
+/usr/bin/ls -1 slice*.nc |pargs.pl -p $1 time gridrec2 -c $center {} \>\>p2.log \& > yyy
+if ( ${?debug} ) then
+   cat yyy
+else
+   source yyy
+endif
+wait
+date

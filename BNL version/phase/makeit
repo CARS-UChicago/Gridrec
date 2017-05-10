@@ -1,0 +1,40 @@
+#CFLAGS = -O3
+HOME = /farm3a/cmtuser
+CFLAGS = -g
+LIBS = -L$(HOME)/lib
+INCLUDES=-I$(HOME)/include
+LIBO = mema.o byteswap.o readPMIS.o shellsort.o fexist.o
+
+all: PMIStoCDF dumpPMIS maxcPMIS pmislib.a phase1 phase2 $(LIBO)
+
+PMIStoCDF: PMIStoCDF.c PMIStoCDF.h
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $@.c $(LIBS) -lnetcdf -lm;
+
+dumpPMIS: dumpPMIS.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $@.c $(LIBS) -lnetcdf -lm
+
+maxcPMIS: maxcPMIS.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $@.c $(LIBS) -lnetcdf -lm
+
+mema.o: mema.c
+
+readPMIS.o: readPMIS.c PMIStoCDF.h
+
+byteswap.o: byteswap.c
+
+shellsort.o: shellsort.c
+
+fexist.o: fexist.c
+
+pmislib.a: $(LIBO)
+	ar -r -s pmislib.a $(LIBO)
+
+phase1: phase1.c pmislib.a
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $@.c pmislib.a -lm
+
+phase2: phase2.c 
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $@.c pmislib.a -lm ${LIBS} -lnetcdf
+
+clean:
+	rm *.o
+	rm *.a
